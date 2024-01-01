@@ -1,0 +1,35 @@
+logging:
+  level:
+    ROOT: DEBUG
+server:
+  port: 8080
+  servlet:
+    context-path: /config-server
+spring:
+  profiles:
+    active: vault,git
+  application:
+    name: myapp
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/gnanbu/spring-config.git"
+          searchPaths: "environments"
+          force-pull: true
+          clone-on-start: false
+          skipSslValidation: true
+          refreshRate: 120
+        vault:
+          scheme: http
+          host: vault.default.svc.cluster.local
+          port: 8200
+          authentication: KUBERNETES
+#          namespace: default
+          kv-version: 2
+          backend: internal
+          profile-separator: "-"
+          kubernetes:
+            role: internal-app
+            kubernetes-path: kubernetes
+            service-account-token-file: /var/run/secrets/kubernetes.io/serviceaccount/token

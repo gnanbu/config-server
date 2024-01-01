@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-server-vault-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+  selector:
+    app: config-server-vault
